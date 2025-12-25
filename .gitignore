@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# 仮想環境
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Flask
+instance/
+.webassets-cache
+
+# データベース
+*.db
+*.sqlite
+*.sqlite3
+
+# 環境変数
+.env
