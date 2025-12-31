@@ -1,20 +1,24 @@
+/* ===== リセット ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ===== 見出し ===== */
 h2 {
   color: #333;
   margin-bottom: 20px;
   font-size: 1.5em;
 }
 
+/* ===== フォーム ===== */
 form {
   display: flex;
   gap: 10px;
 }
 
+/* ===== テーブル ===== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -41,9 +45,36 @@ tr:hover {
   background: #f9f9f9;
 }
 
+/* ===== 空データ表示 ===== */
 .empty {
   text-align: center;
   color: #999;
   padding: 30px;
   font-style: italic;
+}
+
+/* ===== ルーレット ===== */
+.roulette-container {
+  margin: 30px auto;
+  width: 180px;
+  height: 180px;
+  border: 6px solid orange;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#roulette {
+  font-size: 60px;
+}
+
+/* ===== アニメーション ===== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  }
 }
