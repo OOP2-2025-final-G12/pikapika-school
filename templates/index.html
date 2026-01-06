@@ -24,7 +24,7 @@
 
 <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center px-3">
 
-  <!-- 白枠 -->
+  <!-- メイン枠 -->
   <div class="bg-white rounded-4 shadow-lg p-5 w-100 text-center"
        style="max-width: 1000px;">
 
@@ -35,20 +35,31 @@
 
     <!-- 説明 -->
     <p class="fs-5 text-secondary mb-4">
-      うちゅうのようにひろいせかいで、<br>
-      べんきょうとゲームをたのしもう！
+      なまえをいれて、<br>
+      お勉強を頑張ろう！
     </p>
 
-    <!-- アイコン -->
-    <div class="fs-1 mb-4">
-      🚀 🪐 ⭐ 🌙
-    </div>
+    <!-- 名前入力フォーム -->
+    <form method="POST" class="mb-4 d-flex flex-column align-items-center">
 
-    <!-- スタート -->
-    <a href="/select"
-       class="btn btn-primary btn-lg px-5 py-3 fs-2 fw-bold rounded-pill shadow">
-      ▶ スタート！
-    </a>
+      <input
+        type="text"
+        name="name"
+        class="form-control form-control-lg text-center mb-3"
+        placeholder="なまえ"
+        maxlength="8"
+        style="max-width: 22rem;"
+        required
+      >
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg px-5 py-3 fs-3 fw-bold rounded-pill shadow">
+        ▶ スタート！
+      </button>
+
+    </form>
+
 
   </div>
 
