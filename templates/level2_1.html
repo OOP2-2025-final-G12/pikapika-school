@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授業２（文系） - レベル2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>レベル２ クイズ</h1>
+
+        <!-- Flashメッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="flash flash-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <!-- 問題1 -->
+            <h2>2-1. 石川県の県庁所在地はどこ？</h2>
+            <label><input type="radio" name="q1" value="A"> A. 能登市</label><br>
+            <label><input type="radio" name="q1" value="B"> B. 小松市</label><br>
+            <label><input type="radio" name="q1" value="C"> C. 金沢市</label><br>
+            <label><input type="radio" name="q1" value="D"> D. 珠洲市</label><br><br>
+
+            <!-- 問題2 -->
+            <h2>2-2. 犬も歩けば何に当たる？</h2>
+            <label><input type="radio" name="q2" value="A"> A. 人</label><br>
+            <label><input type="radio" name="q2" value="B"> B. 災</label><br>
+            <label><input type="radio" name="q2" value="C"> C. 棒</label><br>
+            <label><input type="radio" name="q2" value="D"> D. 幸</label><br><br>
+
+            <!-- 問題3 -->
+            <h2>2-3. 『あばたもえくぼ』はどういう意味？</h2>
+            <label><input type="radio" name="q3" value="A"> A. あなたにもえくぼがあるように、いい所は自分から見えにくいこと</label><br>
+            <label><input type="radio" name="q3" value="B"> B. 好きになると、悪いところも良いところにみえてしまう</label><br>
+            <label><input type="radio" name="q3" value="C"> C. ゲーム内のキャラクターにもえくぼはある</label><br>
+            <label><input type="radio" name="q3" value="D"> D. あばら骨にくぼんだところがある人がいた</label><br><br>
+
+            <!-- 問題4 -->
+            <h2>2-4. 中学校の地図記号は？</h2>
+            <label><input type="radio" name="q4" value="A"> A. 歯車</label><br>
+            <label><input type="radio" name="q4" value="B"> B. 三本線</label><br>
+            <label><input type="radio" name="q4" value="C"> C. 丸にバッテン</label><br>
+            <label><input type="radio" name="q4" value="D"> D. 文</label><br><br>
+
+            <!-- 問題5 -->
+            <h2>2-5. 老若男女は何と読む？</h2>
+            <label><input type="radio" name="q5" value="A"> A. ろうじゃくだんじょ</label><br>
+            <label><input type="radio" name="q5" value="B"> B. 老いも若きも男も女も</label><br>
+            <label><input type="radio" name="q5" value="C"> C. ろうにゃくなんにょ</label><br>
+            <label><input type="radio" name="q5" value="D"> D. ろうじゃくなんじょ</label><br><br>
+
+            <!-- 問題6 -->
+            <h2>2-6. ５月の英語は？</h2>
+            <label><input type="radio" name="q6" value="A"> A. May</label><br>
+            <label><input type="radio" name="q6" value="B"> B. Fifth</label><br>
+            <label><input type="radio" name="q6" value="C"> C. July</label><br>
+            <label><input type="radio" name="q6" value="D"> D. June</label><br><br>
+
+            <!-- 問題7 -->
+            <h2>2-7. のれんに何を押す？</h2>
+            <label><input type="radio" name="q7" value="A"> A. 腕</label><br>
+            <label><input type="radio" name="q7" value="B"> B. スタンプ</label><br>
+            <label><input type="radio" name="q7" value="C"> C. 素手</label><br>
+            <label><input type="radio" name="q7" value="D"> D. 釘</label><br><br>
+
+            <!-- 問題8 -->
+            <h2>2-8. 『サッカーをする』の英語は？</h2>
+            <label><input type="radio" name="q8" value="A"> A. play the soccer</label><br>
+            <label><input type="radio" name="q8" value="B"> B. do soccer</label><br>
+            <label><input type="radio" name="q8" value="C"> C. soccer</label><br>
+            <label><input type="radio" name="q8" value="D"> D. play soccer</label><br><br>
+
+            <!-- 問題9 -->
+            <h2>2-9. 松江市は何県の県庁所在地？</h2>
+            <label><input type="radio" name="q9" value="A"> A. 香川県</label><br>
+            <label><input type="radio" name="q9" value="B"> B. 島根県</label><br>
+            <label><input type="radio" name="q9" value="C"> C. 長野県</label><br>
+            <label><input type="radio" name="q9" value="D"> D. 茨城県</label><br><br>
+
+            <!-- 問題10 -->
+            <h2>2-10. 聖徳太子が定めた憲法は？</h2>
+            <label><input type="radio" name="q10" value="A"> A. 十七条の憲法</label><br>
+            <label><input type="radio" name="q10" value="B"> B. 日本国憲法</label><br>
+            <label><input type="radio" name="q10" value="C"> C. 平安京憲法</label><br>
+            <label><input type="radio" name="q10" value="D"> D. 邪馬台国憲法</label><br><br>
+
+            <button type="submit">解答する</button>
+        </form>
+
+        <p><a href="{{ url_for('class2.class2') }}">戻る</a></p>
+    </div>
+</body>
+</html>

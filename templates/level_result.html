@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クイズ結果</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>クイズ結果</h1>
+
+        <!-- Flashメッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="flash flash-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="result-info">
+            <h2>スコア: {{ score }} / {{ total }} 問正解</h2>
+            {% if score >= 8 %}
+                <p class="success">合格！ チケットを獲得しました。</p>
+            {% else %}
+                <p class="failure">残念... 次回がんばりましょう！</p>
+            {% endif %}
+        </div>
+
+        <div class="user-info">
+            <p>ユーザー: {{ user.name if user else 'ゲスト' }}</p>
+            <p>現在のチケット: {{ user.ticket if user else 0 }} 枚</p>
+        </div>
+
+        <p class="back-link">
+            <a href="{{ url_for('class2.class2') }}">レベル選択に戻る</a>
+        </p>
+    </div>
+</body>
+</html>

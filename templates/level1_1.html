@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授業２（文系） - レベル１</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>レベル１ クイズ</h1>
+
+        <!-- Flashメッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="flash flash-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <!-- 問題1 -->
+            <h2>1-1. ては何行の何列のひらがな？</h2>
+            <label><input type="radio" name="q1" value="A"> A. カ行ア列</label><br>
+            <label><input type="radio" name="q1" value="B"> B. タ行イ列</label><br>
+            <label><input type="radio" name="q1" value="C"> C. サ行オ列</label><br>
+            <label><input type="radio" name="q1" value="D"> D. タ行エ列</label><br><br>
+
+            <!-- 問題2 -->
+            <h2>1-2. 『花』はどう読める？</h2>
+            <label><input type="radio" name="q2" value="A"> A. ばら</label><br>
+            <label><input type="radio" name="q2" value="B"> B. はなやか</label><br>
+            <label><input type="radio" name="q2" value="C"> C. うつくしい</label><br>
+            <label><input type="radio" name="q2" value="D"> D. け</label><br><br>
+
+            <!-- 問題3 -->
+            <h2>1-3. 雪がふってくるのはいつ？</h2>
+            <label><input type="radio" name="q3" value="A"> A. 春</label><br>
+            <label><input type="radio" name="q3" value="B"> B. 夏</label><br>
+            <label><input type="radio" name="q3" value="C"> C. 秋</label><br>
+            <label><input type="radio" name="q3" value="D"> D. 冬</label><br><br>
+
+            <!-- 問題4 -->
+            <h2>1-4. すいどうから出るみずはどこから取ってくる？</h2>
+            <label><input type="radio" name="q4" value="A"> A. はなれた海</label><br>
+            <label><input type="radio" name="q4" value="B"> B. みずたまり</label><br>
+            <label><input type="radio" name="q4" value="C"> C. 川</label><br>
+            <label><input type="radio" name="q4" value="D"> D. 木</label><br><br>
+
+            <!-- 問題5 -->
+            <h2>1-5. あぶないひとには？</h2>
+            <label><input type="radio" name="q5" value="A"> A. おかしをもらう</label><br>
+            <label><input type="radio" name="q5" value="B"> B. ついていていかない</label><br>
+            <label><input type="radio" name="q5" value="C"> C. たたかう</label><br>
+            <label><input type="radio" name="q5" value="D"> D. なででもらう</label><br><br>
+
+            <!-- 問題6 -->
+            <h2>1-6. 『人』はどうよめる？</h2>
+            <label><input type="radio" name="q6" value="A"> A. つながり</label><br>
+            <label><input type="radio" name="q6" value="B"> B. ひと</label><br>
+            <label><input type="radio" name="q6" value="C"> C. はいる</label><br>
+            <label><input type="radio" name="q6" value="D"> D. いきもの</label><br><br>
+
+            <!-- 問題7 -->
+            <h2>1-7. 『じゃがいも、にんじん、トマト、こめ、らっきょう』に含まれないものは？</h2>
+            <label><input type="radio" name="q7" value="A"> A. にんじん</label><br>
+            <label><input type="radio" name="q7" value="B"> B. じゃがいも</label><br>
+            <label><input type="radio" name="q7" value="C"> C. こめ</label><br>
+            <label><input type="radio" name="q7" value="D"> D. だいこん</label><br><br>
+
+            <!-- 問題8 -->
+            <h2>1-8. 朝のあいさつはどれ？</h2>
+            <label><input type="radio" name="q8" value="A"> A. おはようございます</label><br>
+            <label><input type="radio" name="q8" value="B"> B. いただきます</label><br>
+            <label><input type="radio" name="q8" value="C"> C. おやすみなさい</label><br>
+            <label><input type="radio" name="q8" value="D"> D. ありがとうございます</label><br><br>
+
+            <!-- 問題9 -->
+            <h2>1-9. くるまを作っているところはどこ？</h2>
+            <label><input type="radio" name="q9" value="A"> A. こうえん</label><br>
+            <label><input type="radio" name="q9" value="B"> B. おうち</label><br>
+            <label><input type="radio" name="q9" value="C"> C. こうじょう</label><br>
+            <label><input type="radio" name="q9" value="D"> D. こうばん</label><br><br>
+
+            <!-- 問題10 -->
+            <h2>1-10. 『君』はどうよめる？</h2>
+            <label><input type="radio" name="q10" value="A"> A. あんぱん</label><br>
+            <label><input type="radio" name="q10" value="B"> B. くん</label><br>
+            <label><input type="radio" name="q10" value="C"> C. しろみ</label><br>
+            <label><input type="radio" name="q10" value="D"> D. あなた</label><br><br>
+
+            <button type="submit">解答する</button>
+        </form>
+
+        <p><a href="{{ url_for('class2.class2') }}">戻る</a></p>
+    </div>
+</body>
+</html>

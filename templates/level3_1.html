@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>授業２（文系） - レベル3</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>レベル3 クイズ</h1>
+
+    <!-- Flashメッセージ表示 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="flash flash-{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+    <form method="POST">
+        <!-- 問題1 -->
+        <h2>3-1. 次の文を読んで質問に答えなさい</h2>
+        <p><strong>【問題文】</strong><br>
+        縁「最近、体調悪いんだよね」<br>
+        朱亜「そうなの？ 大丈夫？ なんか理由ある？」<br>
+        縁「具体的には、覚えてないかな」<br>
+        朱亜「そっか。じゃあ、適当に並べてみて。本当に無いか、考えてあげる」<br>
+        縁「本当？ ありがとう。ゲームは深夜までやってるよ。でも、これは昔からやってるし。美味しいご飯は、いっぱい食べてるよ。たまに、胃もたれするぐらい。それから、学校では彼氏とイチャイチャかな」<br>
+        朱亜「嫌味言うなら、手伝わないよ。まぁ、いいや。ユカって最近、部活始めなかった？」<br>
+        縁「そうだね。うん。サッカー部。来る？」<br>
+        朱亜「マネージャーとしてでしょ」<br>
+        縁「まぁね。でも、暑い中、炎天下で大きな声を出すのは疲れるんだよね。水を飲むのも忘れるし。ま、たまに好きって叫んで照れてるのも可愛いけどね。あ、もちろん真面目に仕事はしてるよ」<br>
+        朱亜「そういうとこじゃない？」</p>
+
+        <p><strong>【質問】</strong><br>
+        縁は、なんで今、体調を崩している？</p>
+        <label><input type="radio" name="q1" value="A"> A. 夜中までゲームをしているから</label><br>
+        <label><input type="radio" name="q1" value="B"> B. 友達に嫌味を言って、不快な思いにさせているから</label><br>
+        <label><input type="radio" name="q1" value="C"> C. 美味しいものをいっぱい食べて、太ったから</label><br>
+        <label><input type="radio" name="q1" value="D"> D. 昼間に人一倍、頑張っているのに、十分に休んでいないから</label><br>
+        <label><input type="radio" name="q1" value="E"> E. 熱中症になっていたから</label><br>
+        <div id="ans1"></div><br>
+
+        <!-- 問題2 -->
+        <h2>3-2. 次の文を読んで質問に答えなさい</h2>
+        <p><strong>【問題文】</strong><br>
+            古城さんのクラスでは、グループごとに学校行事として、職業体験に行きました。その後、発表する際の原稿を読んで、後の問いに答えなさい。<br>
+            私達のグループは、町川市立図書館に職業体験へ行きました。理由は、私たちのグループに、作家のお父さんを持つ木下そあ君がいて、作家さんの日常について詳しく聞いている内に、その本が皆のもとに届く間の仕事について興味を持ったからです。<br>
+            まず最初に、私たちの職業体験に付き添って頂いた、中間恵菜さんについて、少しご説明いたします。<br>
+            皆さんは、図書館の職員と聞くと、子供の頃から本を読んでいたり、文学作品に触れていたり、なんて考えるのではないでしょうか。しかし、中間さんは、「子供の頃は、専らゲーム一択。よくお母さんから叱られてました」と仰っていました。中間さんが本との出会いを果たしたのは、高校2年生の頃。当時、仲が良かった友達に、たくさんの本を勧めてもらったことがキッカケでした。その方は文学部で、選ぶ本もどれも簡単な上、面白いものが多く、どれもこれもスグにハマったそうです。私たちと同じ理系のクラスにいた中間さんは、普段から本を読むような事は滅多にありませんでしたが、その方が選んだ本にのめり込むうち、本に関わる仕事に就きたいと考えるようになったと昔を振り返ってらっしゃいました。<br>
+            私達は、中間さんの話を聞いて、本との出会いが人の人生を大きく変えたと言うことにとても驚き、昔の話をしている時の中間さんの嬉しそうな表情に、ドキッとしました。<br>
+            さて、本題の職業体験について話していきます。<br>
+            私たちは、最初に雑誌の入れ替え作業を行いました。町川市立図書館では、A、B、C、D、Eの5つの書架に雑誌を分けていきます。中間さんの説明では、アニメや漫画、戦隊物などの子供向け雑誌はA。車やミリタリーなどの趣味・娯楽系の雑誌はB、女性向けや週刊誌などはC、囲碁や野球などのスポーツ、文化的なものはD、その他はEに並べるそうです。中間さんは、説明しながらもテキパキと本を棚に収めていき、私たちは手際の良さに感動しました。<br>
+            ここで一つ、小噺なのですが、私（古城）や木下君がまじめに仕分けをしているなか、元澤さんが途中から、とある週刊誌を読み始めてしまいました。内容は、某政治家が幼女趣味を持っていたという暴露系で、元澤さんは「信じられない」というような事を言っていました。すると、井野くんが調子に乗って、「自分もロリコンだ」と冗談を言いました。元澤さんがスグに、「捕まえてやる」と返して、その場は笑いに包まれました。これは冗談を含んだ笑い話ですが、絶対に未成年への交渉など、してはいけません。<br>
+            本題に戻ります。笑いながら、中間さんが元澤さんに、「その雑誌は今まで読んだことがあるの？」とお聞きになられました。元澤さんが「無いです」と答えると、「なら、他の巻も読んでみて」と続けました。私（古城）が理由を尋ねると、「その本の性質を知るのも、図書館で働くためには必要。どんな本をお客さんにオススメするべきなのか、知っておかないと」と返され、納得しました。ただ、本を貸したり返したり、直したり棚に並べたりするだけでは、ダメなんです。館内の本を熟知し、いつどんな時にオススメの本を聞かれても答えられなくてはいけない。図書館の職員さんの凄さを改めて実感しました。<br>
+            そうして、本を読んでいると、中間さんが「もう終わりも近いから、システム触ってみる？」と、本の検索や貸し借りのシステムを体験させて下さいました。返すときに、おばあちゃんが「この本、面白かったよ」と言って下さったり、常連だというお兄さんが「木下さんはね－－－」と、木下君のお父さんについて熱く語っていかれたりと、印象に残る出来事がたくあんありましたが、皆、笑っていました。<br>
+            現代では、文字離れ、本離れが進んでいます。自習のために入った図書館の、ふと目を挙げた瞬間に視界に入る本。一度、目を通してみるのはどうですか？ 本は人を笑顔にし、幸せにする。中間さん、そして体験中の皆さんの笑顔から、私達が学んだ事です。<br>
+
+        <p><strong>【質問】</strong><br>
+        何故、中間さんは図書館で働こうと思ったのか。</p>
+        <label><input type="radio" name="q2" value="A"> A. 本をたくさん読んでいたから</label><br>
+        <label><input type="radio" name="q2" value="B"> B. 同じ文系の友達に、本を勧められたから</label><br>
+        <label><input type="radio" name="q2" value="C"> C. 本が好きだから</label><br>
+        <label><input type="radio" name="q2" value="D"> D. 文学部の友達の影響によって</label><br>
+        <label><input type="radio" name="q2" value="E"> E. 本にドキッとしたから</label><br>
+        <div id="ans2"></div><br>
+
+        <!-- 問題3 -->
+        <h2>3-3. 土佐日記はどんな点で特徴的か答えなさい</h2>
+        <label><input type="radio" name="q3" value="A"> A. 男性が仮名で書いた初めての書物である</label><br>
+        <label><input type="radio" name="q3" value="B"> B. 旅の物語が、駄洒落を含めて書かれている</label><br>
+        <label><input type="radio" name="q3" value="C"> C. 初めて女性が筆を持って、書いた日記である</label><br>
+        <label><input type="radio" name="q3" value="D"> D. 源氏物語の崇拝者が書いたファンレターである</label><br>
+        <label><input type="radio" name="q3" value="E"> E. 和歌が織り交ぜられた物語として書かれている</label><br>
+        <div id="ans3"></div><br>
+
+        <!-- 問題4 -->
+        <h2>3-4. 織田信長が成しえなかったことは何か答えなさい</h2>
+        <label><input type="radio" name="q4" value="A"> A. 寺を焼き、宗教の力を弱めた</label><br>
+        <label><input type="radio" name="q4" value="B"> B. 自分の城下町で商業を発展させた</label><br>
+        <label><input type="radio" name="q4" value="C"> C. 天下統一を目指して、室町幕府を閉じた</label><br>
+        <label><input type="radio" name="q4" value="D"> D. 海外をも征服するため、ポルトガルへ出向いた</label><br>
+        <label><input type="radio" name="q4" value="E"> E. 大蛇の出る池があると聞き向かったが、倒し損ねた</label><br>
+        <div id="ans4"></div><br>
+
+        <!-- 問題5 -->
+        <h2>3-5. 次の日本語を正しく英訳している文を選びなさい</h2>
+        <p><strong>【問題文】</strong><br>
+        牧街先生は子ども嫌いで知られている</p>
+        <label><input type="radio" name="q5" value="A"> A. Ms. Makimachi hates children.</label><br>
+        <label><input type="radio" name="q5" value="B"> B. Ms. Makimachi is known to dislike children.</label><br>
+        <label><input type="radio" name="q5" value="C"> C. Ms. Makimachi are known to dislike children.</label><br>
+        <label><input type="radio" name="q5" value="D"> D. Ms. Makimachi is known for dislike children.</label><br>
+        <label><input type="radio" name="q5" value="E"> E. Ms. Makimachi is a teacher who is dislike children.</label><br>
+        <div id="ans5"></div><br>
+
+        <!-- 問題6 -->
+        <h2>3-6. 次の四字熟語のうち、美しい水辺を表すものはどれか答えなさい</h2>
+        <label><input type="radio" name="q6" value="A"> A. 星火燎原</label><br>
+        <label><input type="radio" name="q6" value="B"> B. 鶴汀鳧渚</label><br>
+        <label><input type="radio" name="q6" value="C"> C. 如法暗夜</label><br>
+        <label><input type="radio" name="q6" value="D"> D. 滄海遺珠</label><br>
+        <label><input type="radio" name="q6" value="E"> E. 湯池鉄城</label><br>
+        <div id="ans6"></div><br>
+
+        <!-- 問題7 -->
+        <h2>3-7. 日本で『ぶどう』の生産量が１位の県はどれか答えなさい</h2>
+        <label><input type="radio" name="q7" value="A"> A. 長野県</label><br>
+        <label><input type="radio" name="q7" value="B"> B. 山形県</label><br>
+        <label><input type="radio" name="q7" value="C"> C. 徳島県</label><br>
+        <label><input type="radio" name="q7" value="D"> D. 山梨県</label><br>
+        <label><input type="radio" name="q7" value="E"> E. 熊本県</label><br>
+        <div id="ans7"></div><br>
+
+        <!-- 問題8 -->
+        <h2>3-8. 筑紫山地が含まれる県を答えなさい</h2>
+        <label><input type="radio" name="q8" value="A"> A. 福島県</label><br>
+        <label><input type="radio" name="q8" value="B"> B. 新潟県</label><br>
+        <label><input type="radio" name="q8" value="C"> C. 佐賀県</label><br>
+        <label><input type="radio" name="q8" value="D"> D. 兵庫県</label><br>
+        <label><input type="radio" name="q8" value="E"> E. 熊本県</label><br>
+        <div id="ans8"></div><br>
+
+        <!-- 問題9 -->
+        <h2>3-9. 富士山が世界遺産に登録されたのはいつか選びなさい</h2>
+        <label><input type="radio" name="q9" value="A"> A. 2010年</label><br>
+        <label><input type="radio" name="q9" value="B"> B. 1997年</label><br>
+        <label><input type="radio" name="q9" value="C"> C. 2020年</label><br>
+        <label><input type="radio" name="q9" value="D"> D. 2003年</label><br>
+        <label><input type="radio" name="q9" value="E"> E. 2013年</label><br>
+        <div id="ans9"></div><br>
+
+        <!-- 問題10 -->
+        <h2>3-10. 新しい人権に当たらないものはどれか選びなさい</h2>
+        <label><input type="radio" name="q10" value="A"> A. 知る権利</label><br>
+        <label><input type="radio" name="q10" value="B"> B. 日照権</label><br>
+        <label><input type="radio" name="q10" value="C"> C. 嫌煙権</label><br>
+        <label><input type="radio" name="q10" value="D"> D. 表現の自由</label><br>
+        <label><input type="radio" name="q10" value="E"> E. 忘れられる権利</label><br>
+        <div id="ans10"></div><br>
+
+        <button type="submit">解答する</button>
+    </form>
+
+    <p><a href="/class2">戻る</a></p>
+
+    <script>
+        function checkAnswers() {
+            // すべてのラジオボタンを無効化
+            document.querySelectorAll('input[type=radio]').forEach(radio => {
+                radio.disabled = true;
+            });
+
+            // ボタンを無効化（二度押し防止）
+            document.querySelector('button').disabled = true;
+
+            // 正解データ（問題番号に対応）
+            const answers = {
+                q1: { correct: 'D', explanation: '正解はDです。<br>ゲームのしすぎは、確かに一般的には体調を崩す原因の一つとして考えられている。しかし、縁は「昔からやってるし」とあるように、以前から夜遅くまで、ゲームをする事があったようだ。具体的な「昔」は分からないが、「今」体調を崩した原因としては、当てはまらない。美味しいものを食べて、胃もたれをしたという記述はあったが、それによって太ったという明確な描写はない。よって、不適切。縁は「昔」からゲームを深夜までやっていることがあったようだ。これ自体は、「今」、体調を崩した原因とは異なる。しかし、縁は「最近」サッカー部のマネージャーになり、「真面目に仕事をしている」らしい。そこに加え、その部活には彼氏が在籍しており、常識的に考えて、周りの人より熱意を持っているのは確かだろう。よって、「人一倍」に当てはまる。しかしながら、縁には『昔から夜遅くまでゲームをする』習慣があり、その休みを充分に癒せていないのは明確。よって、適切。常識的に考えて、炎天下の中で水を飲まないのは、熱中症になる危険性が高い。しかし、熱中症になったという　記述はどこにも無い。また、部活動中に気持ち悪くなったり、頭が痛くなったりしていたら、「具体的には、覚えてないかな」の一言は謎になる。よって、不適切。' },
+                q2: { correct: 'D', explanation: '正解はDです。<br>Aは文内で否定されているため、不適切。Bも同様に否定されている。中間さんは理系であり、文系ではない。Cはそれが理由ではない。Dが正解で、文内に記載がある。Eはそもそもドキッとしたのは、古城さんであって中間さんではない。' },
+                q3: { correct: 'A', explanation: '正解はAです。<br>男性の紀貫之が女性の振りをして書いた作品で、源氏物語について書かれているわけではない' },
+                q4: { correct: 'D', explanation: '正解はDです。<br>ポルトガルの商人に興味を持ったり、黒人の弥助を含めて様々な外国人と接点を持ったグルーバルな方ですが、実際に行くことはありませんでした。' },
+                q5: { correct: 'B', explanation: '正解はBです。<br>文法に気をつけましょう。三段限のsや、toの後に来る原型動詞などなどがあります。' },
+                q6: { correct: 'B', explanation: '正解はBです。<br>Aはせいかりょうげんと読み、小さいものが大きく手強いものになることを言います。Bはかくていふしょと読み、鶴と鴨が遊んでいる水辺の美しさを表している。Cはにょほうあんやと読み、明かりの一切無い本当に暗い夜のこと。Dはそうかいのいしゅと読み、世間様は知らないけれど立派で有能な人材のこと。Eはとうちてつじょうと読み、城の守りが非常に硬いこと。' },
+                q7: { correct: 'D', explanation: '正解はDです。<br>Aはセロリやレタスなどの夏野菜が名産品となっています。Bはさくらんぼの名産地です。生産量・出荷量は日本一です。Cはすだちや柚香の名産地で、日本一となっています。Eはデコポンやい草の名産地です。' },
+                q8: { correct: 'C', explanation: '正解はCです。<br>筑紫山地は九州の北側にあり、東北地方の福島県、北陸地方の新潟県、近畿地方の兵庫県は遠く離れています。熊本県にあるのは、九州山地です。' },
+                q9: { correct: 'E', explanation: '正解はEです。<br>富士山が含まれる世界遺産の名前は、『富士山－信仰の対象と芸術の源泉』である。富士山だけでなく、富士山に関わる様々な場所が登録されています。' },
+                q10:{ correct: 'D', explanation: '正解はDです。<br>表現の自由は、精神自由権という大枠に含まれている。これは、憲法に明記されている。新しい人権とは、憲法上に明記されていないが権利のことを言う。' }
+            };
+
+            let score = 0;
+            const total = Object.keys(answers).length;
+
+            for (const [q, data] of Object.entries(answers)) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                const resultDiv = document.getElementById('ans' + q.slice(1));
+
+                if (selected && selected.value === data.correct) {
+                    score++;
+                    resultDiv.innerHTML = `<strong>正解！</strong><br>${data.explanation}`;
+                } else {
+                    resultDiv.innerHTML = `<strong>不正解</strong>（正解は${data.correct}）<br>${data.explanation}`;
+                }
+            }
+
+            // 総合スコア表示（フォームの上に挿入）
+            const scoreDiv = document.createElement('div');
+            scoreDiv.innerHTML = `<h2>結果：${score} / ${total} 問正解</h2>`;
+            document.querySelector('h1').insertAdjacentElement('afterend', scoreDiv);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>授業２（文系）</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body>
+        <div>
+            <h1>クラス２ レベル選択</h1>
+
+            <p>こんにちは、<strong>{{ user.name if user else 'テストユーザー' }}</strong>さん！</p>
+            <p>現在のticket: <strong>{{ user.ticket if user else 0 }}</strong>枚</p>
+
+            <p>
+                <a href="{{ url_for('class2.level1') }}">レベル１</a>
+                <a href="{{ url_for('class2.level2') }}">レベル２</a>
+                <a href="{{ url_for('class2.level3') }}">レベル３</a>
+            </p>
+        </div>
+
+        <p><a href="/">トップに戻る</a></p>
+    </body>
+</html>
