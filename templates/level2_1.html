@@ -4,7 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>授業２（文系） - レベル2</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
+            background: linear-gradient(to bottom, #f0f8ff, #fffaf0);
+            color: #333;
+            margin: 0;
+            padding: 20px 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* CSSだけで背景に動きをつける（龍モチーフ） */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+            /* 龍本体を大きくするためにスケールアップ＆位置調整 */
+            radial-gradient(ellipse 180% 120% at 10% 25%, rgba(40,40,80,0.38) 0%, transparent 30%),
+            radial-gradient(ellipse 160% 110% at 30% 38%, rgba(30,30,70,0.42) 0%, transparent 28%),
+            radial-gradient(ellipse 170% 115% at 55% 32%, rgba(25,25,65,0.45) 0%, transparent 25%),
+            radial-gradient(ellipse 150% 130% at 75% 42%, rgba(35,35,75,0.40) 0%, transparent 32%),
+            radial-gradient(ellipse 140% 100% at 88% 28%, rgba(45,45,85,0.35) 0%, transparent 30%),
+            
+            /* 頭部強調 */
+            radial-gradient(circle 90px at 12% 18%, rgba(15,15,50,0.55) 0%, transparent 50%),
+            
+            /* 尾強調 */
+            radial-gradient(ellipse 200% 140% at 92% 78%, rgba(30,30,70,0.38) 0%, transparent 35%),
+            
+            /* 墨のタッチ（濃さを少し上げて） */
+            linear-gradient(40deg, transparent 46%, rgba(20,20,60,0.18) 50%, transparent 54%),
+            linear-gradient(-50deg, transparent 46%, rgba(20,20,60,0.15) 50%, transparent 54%),
+            radial-gradient(circle at 45% 65%, rgba(25,25,65,0.22) 0%, transparent 40%);
+        
+        background-size: 120% 120%, 110% 110%, 130% 130%, 100% 100%, 140% 140%, 
+                        80% 80%, 150% 150%, 200% 200%, 180% 180%, 160% 160%;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0.82;
+        pointer-events: none;
+        z-index: -2;
+    }
+
+    /* コンテナの背景を少し透明に（龍がより見える） */
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 40px 50px;
+        border-radius: 24px;
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(8px);
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 文字の視認性を保つための調整 */
+    h1, h2, label, button {
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 1px 3px rgba(255,255,255,0.9);
+    }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #e67e22;
+            font-size: 1.4rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 6px solid #f39c12;
+            background: #fdf2e9;
+            padding: 10px 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2rem;
+            margin: 12px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            cursor: pointer;
+        }
+
+        label:hover {
+            background: #ebf3fd;
+        }
+
+        input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #3498db;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 300px;
+            margin: 50px auto;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
+        }
+
+        .flash-messages {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .flash {
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .flash-success { background: #d4edda; color: #155724; }
+        .flash-error { background: #f8d7da; color: #721c24; }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
