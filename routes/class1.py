@@ -1,5 +1,5 @@
 # ...existing code...
-from flask import Blueprint, render_template, redirect, url_for, session, request
+from flask import Blueprint, render_template, redirect, url_for, session, request, make_response
 import random
 from models.user import User
 
@@ -53,25 +53,55 @@ QUESTIONS = {
 
 QUIZ_SIZE = 10  # 出題数
 
-def _get_user_or_test():
+def _get_user_and_cookie():
+    """Retrieve logged-in user using session or cookie. If none, create a test user and
+    request that the caller set a cookie with that user's id.
+
+    Returns: (user, cookie_value_or_None)
+    - user: models.user.User instance
+    - cookie_value_or_None: if non-None, caller should set a cookie 'ppk_user' to this value
+    """
+    # 1) session にユーザーがあれば優先
     user_id = session.get("user_id")
     if user_id:
-        return User.get_by_id(user_id)
-    # テスト表示用：id=1 を探す／作成
+        user = User.get_by_id(user_id)
+        if user:
+            return user, None
+
+    # 2) cookie に保存されたユーザーID があればそれを使う
+    cookie_val = request.cookies.get("ppk_user")
+    if cookie_val:
+        try:
+            cookie_uid = int(cookie_val)
+        except (TypeError, ValueError):
+            cookie_uid = None
+        if cookie_uid:
+            user = User.get_or_none(User.id == cookie_uid)
+            if user:
+                # セッションにも設定しておく
+                session["user_id"] = user.id
+                return user, None
+
+    # 3) 上記が無ければテスト用ユーザーを作成（既に id=1 のユーザーがあればそれを使う）
     user = User.get_or_none(User.id == 1)
     if not user:
         user = User.create(name="テストユーザー")
-    return user
+
+    # 呼び出し元に cookie をセットするよう指示（ユーザーID を保存）
+    return user, str(user.id)
 
 @class1_bp.route("/class1")
 def class1():
-    user = _get_user_or_test()
-    return render_template("class1.html", user=user)
+    user, cookie_to_set = _get_user_and_cookie()
+    resp = make_response(render_template("class1.html", user=user))
+    if cookie_to_set:
+        resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)  # 30日
+    return resp
 
 @class1_bp.route("/class1/level<int:level>")
 def class1_start(level):
     """クイズ開始：問題をランダム抽出してセッションに保存し、最初の問題へリダイレクト"""
-    user = _get_user_or_test()
+    user, cookie_to_set = _get_user_and_cookie()
     if level not in QUESTIONS:
         return redirect(url_for("class1.class1"))
 
@@ -85,15 +115,21 @@ def class1_start(level):
     # セッションに保存（JSON化可能な構造）
     session[f"class1_{level}_questions"] = selected
     session[f"class1_{level}_answers"] = []  # ユーザーの解答（選択肢インデックス）
-    return redirect(url_for("class1.question", level=level, idx=0))
+    resp = make_response(redirect(url_for("class1.question", level=level, idx=0)))
+    if cookie_to_set:
+        resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
+    return resp
 
 @class1_bp.route("/class1/level<int:level>/q/<int:idx>", methods=["GET", "POST"])
 def question(level, idx):
-    user = _get_user_or_test()
+    user, cookie_to_set = _get_user_and_cookie()
     questions = session.get(f"class1_{level}_questions")
     if not questions:
         # クイズ未初期化ならスタートページへ
-        return redirect(url_for("class1.class1"))
+        resp = make_response(redirect(url_for("class1.class1")))
+        if cookie_to_set:
+            resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
+        return resp
 
     answers = session.get(f"class1_{level}_answers", [])
 
@@ -111,8 +147,12 @@ def question(level, idx):
         # 次の問題または結果表示へ
         next_idx = idx + 1
         if next_idx >= len(questions):
-            return redirect(url_for("class1.result", level=level))
-        return redirect(url_for("class1.question", level=level, idx=next_idx))
+            resp = make_response(redirect(url_for("class1.result", level=level)))
+        else:
+            resp = make_response(redirect(url_for("class1.question", level=level, idx=next_idx)))
+        if cookie_to_set:
+            resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
+        return resp
 
     # GET: 指定 idx を表示
     if idx < 0 or idx >= len(questions):
@@ -123,11 +163,14 @@ def question(level, idx):
     progress = idx + 1
     # パーセンテージをサーバー側で計算してテンプレートに渡す（テンプレート内での式を避けるため）
     progress_percent = int((progress * 100) // total)
-    return render_template("class1_level.html", user=user, level=level, q=q, idx=idx, total=total, progress=progress, progress_percent=progress_percent)
+    resp = make_response(render_template("class1_level.html", user=user, level=level, q=q, idx=idx, total=total, progress=progress, progress_percent=progress_percent))
+    if cookie_to_set:
+        resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
+    return resp
 
 @class1_bp.route("/class1/level<int:level>/result")
 def result(level):
-    user = _get_user_or_test()
+    user, cookie_to_set = _get_user_and_cookie()
     questions = session.get(f"class1_{level}_questions", [])
     answers = session.get(f"class1_{level}_answers", [])
 
@@ -146,6 +189,7 @@ def result(level):
     ticket_award = 0
     if passed:
         ticket_award = {1: 1, 2: 2, 3: 3}.get(level, 1)
+        # cookie によりマッチしたユーザーに付与する（user は既に取得済み）
         user.ticket += ticket_award
         user.save()
 
@@ -157,5 +201,8 @@ def result(level):
     session.pop(f"class1_{level}_questions", None)
     session.pop(f"class1_{level}_answers", None)
 
-    return render_template("class1_result.html", user=user, level=level, score=score, correct=correct, total=len(questions), passed=passed, ticket_award=ticket_award, questions=q_copy, answers=a_copy)
+    resp = make_response(render_template("class1_result.html", user=user, level=level, score=score, correct=correct, total=len(questions), passed=passed, ticket_award=ticket_award, questions=q_copy, answers=a_copy))
+    if cookie_to_set:
+        resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
+    return resp
 # ...existing code...
