@@ -21,7 +21,10 @@ def index():
     user = None
     user_id = session.get("user_id")
     if user_id:
-        user = User.get_by_id(user_id)
+        try:
+            user = User.get_by_id(user_id)
+        except User.DoesNotExist:
+            session.clear()
 
     return render_template("index.html", user=user)
 
@@ -35,7 +38,11 @@ def select():
         return redirect(url_for("main.index"))
 
     # 現在のユーザーを取得
-    user = User.get_by_id(user_id)
+    try:
+        user = User.get_by_id(user_id)
+    except User.DoesNotExist:
+        session.clear()
+        return redirect(url_for("main.index"))
 
     # 全ユーザーを取得
     users = User.select().order_by(User.id.desc())
