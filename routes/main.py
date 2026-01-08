@@ -16,3 +16,9 @@ def index():
     # 全ユーザーを取得
     users = User.select().order_by(User.id.desc())
     return render_template("index.html", users=users)
+
+@main_bp.route("/game")
+def game():
+
+    users = User.select().order_by(User.coin.desc())
+    return render_template("game.html",users = users)
