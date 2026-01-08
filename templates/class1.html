@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>授業1（Class1）</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='class1_style.css') }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+  <div class="site-title">ピカピカ学園</div>
+  <div class="container">
+    <header class="site-header">
+      <h1>📘 授業1（理系）</h1>
+      <div class="user-info">{{ user.name }} | コイン: {{ user.coin }} | チケット: {{ user.ticket }}</div>
+    </header>
+
+    <div class="card">
+      <h2>むずかしさをえらんでね</h2>
+      <div class="level-grid">
+        <a class="level-btn" href="/class1/level1">レベル1</a>
+        <a class="level-btn" href="/class1/level2">レベル2</a>
+        <a class="level-btn" href="/class1/level3">レベル3</a>
+      </div>
+    </div>
+
+    <p style="margin-top: 14px;"><a href="/select">← セレクト画面に戻る</a></p>
+  </div>
+</body>
+</html>
