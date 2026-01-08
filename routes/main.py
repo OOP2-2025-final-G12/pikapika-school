@@ -34,6 +34,17 @@ def select():
     if not user_id:
         return redirect(url_for("main.index"))
 
+    # 現在のユーザーを取得
     user = User.get_by_id(user_id)
 
-    return render_template("select.html", user=user)
+    # 全ユーザーを取得
+    users = User.select().order_by(User.id.desc())
+    return render_template("select.html", user=user, users=users)
+
+
+@main_bp.route("/ranking")
+def ranking():
+    """ランキングページ - コイン数でソート"""
+    # コイン数の多い順にユーザーを取得
+    users = User.select().order_by(User.coin.desc())
+    return render_template("ranking.html", users=users)
