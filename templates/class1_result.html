@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>授業1 - 結果</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='class1_style.css') }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+  <div class="site-title">ピカピカ学園</div>
+  <div class="container">
+    <div class="card">
+      <h2>結果発表</h2>
+
+      <p class="big-correct">{{ correct }}問正解！</p>
+      <p class="small-ticket">チケット {{ ticket_award }} 枚 GET！</p>
+
+      <div class="controls" style="margin-top:18px;">
+        <button id="reviewBtn" class="btn secondary">見直しをする</button>
+        <a class="btn" href="/select">授業を終わる</a>
+      </div>
+
+      <div id="review" class="review-list" style="display:none; margin-top:18px; text-align:left;">
+        <h3>見直し</h3>
+        {% if questions %}
+          {% for q in questions %}
+            {% set qi = loop.index0 %}
+            {% set user_choice = None %}
+            {% if qi < answers|length %}
+              {% set user_choice = answers[qi] %}
+            {% endif %}
+            <div class="review-item {% if user_choice is not none and user_choice == q.answer %}correct{% else %}incorrect{% endif %}">
+              <div class="review-q">Q{{ loop.index }}. {{ q.q }}</div>
+              <div class="review-choices">あなた: {{ q.choices[user_choice] if user_choice is not none and user_choice < q.choices|length else '未回答' }}
+               ／ 正解: {{ q.choices[q.answer] }}</div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="empty">見直すデータがありません。</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('reviewBtn').addEventListener('click', function(){
+      var r = document.getElementById('review');
+      if(r.style.display === 'none') { r.style.display = 'block'; this.textContent = '見直しを閉じる'; }
+      else { r.style.display = 'none'; this.textContent = '見直しをする'; }
+    });
+  </script>
+</body>
+</html>
