@@ -38,7 +38,7 @@ def class2():
         resp.set_cookie("ppk_user", cookie_to_set, max_age=60*60*24*30)
     return resp
 
-# 共通の処理を関数化してコードをすっきりさせる
+# 正解数を計算して、チケットを付与するか決める処理
 def handle_level(quiz_variations, level_num):
     user, cookie_to_set = _get_user_and_cookie()
 
