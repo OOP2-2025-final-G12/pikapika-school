@@ -153,22 +153,22 @@ a[href="/"]:hover {
 
     <body>
         <div>
-            <h1>クラス２ レベル選択</h1>
+            <h1>授業２ レベル選択</h1>
 
             <p>こんにちは、<strong>{{ user.name if user else 'テストユーザー' }}</strong>さん！</p>
             <p>現在のticket: <strong>{{ user.ticket if user else 0 }}</strong>枚</p>
 
             <div class="level-buttons">
                 <a href="{{ url_for('class2.level1') }}" class="level-button">
-                <span>レベル１</span>
+                <span>レベル１（小学校低学年）</span>
                 <small>薄桜</small>
             </a>
             <a href="{{ url_for('class2.level2') }}" class="level-button">
-                <span>レベル２</span>
+                <span>レベル２（小学校高学年）</span>
                 <small>海松色</small>
             </a>
             <a href="{{ url_for('class2.level3') }}" class="level-button">
-                <span>レベル３</span>
+                <span>レベル３（雑学・中学校）</span>
                 <small>浅縹</small>
             </a>
         </div>
