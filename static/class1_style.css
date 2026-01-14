@@ -1,0 +1,149 @@
+/* class1専用スタイル */
+/* ベース */
+.container {
+  max-width: 920px;
+  margin: 28px auto;
+  padding: 18px;
+  text-align: center; /* 全体を中央揃えに */
+  position: relative; /* for background pseudo-element */
+}
+
+.site-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0b4a6f;
+  text-align: center;
+  margin: 10px 0 6px 0;
+}
+
+.site-header { display:flex; flex-direction:column; align-items:center; margin-bottom:14px; }
+
+h1 { color:#0b4a6f; font-size:1.4rem; margin:0; }
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(15,30,40,0.06);
+  margin-bottom: 16px;
+}
+
+/* ensure room for absolute-positioned next button */
+.card { position: relative; padding-bottom: 72px; }
+
+.question-text { font-size:1.4rem; margin:8px 0 18px 0; line-height:1.6; }
+
+.choices { display:grid; gap:14px; grid-template-columns:1fr; justify-items:center; }
+.choice {
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  padding:16px 18px; border-radius:14px; background:#fbfcff; border:1px solid #e6eef6;
+  width:100%; max-width:760px; /* full width of grid cell, but cap */
+  text-align: center; /* center text inside */
+}
+.choice span { display:block; width:100%; font-size:1.18rem; white-space:nowrap; word-break:keep-all; }
+
+input[type="radio"] { width:18px; height:18px; }
+
+.btn { display:inline-block; background:linear-gradient(180deg,#2a9df4,#1b7ed6); color:#fff; padding:10px 14px; border-radius:8px; text-decoration:none; font-weight:600; }
+.btn.secondary { background:#f5f7fa; color:#234; border:1px solid #e3eaf2; }
+.controls { margin-top:18px; display:flex; gap:10px; justify-content:center; }
+
+/* meta (問題番号など) を左上に表示 */
+.card .meta { text-align:left; color:#6b6b6b; font-size:0.95rem; margin-bottom:8px; }
+
+/* 次へボタンを大きく目立たせる */
+.btn { display:inline-block; background:linear-gradient(180deg,#2a9df4,#1b7ed6); color:#fff; padding:12px 20px; border-radius:10px; text-decoration:none; font-weight:700; font-size:1rem; }
+
+/* smaller next button positioned at right-bottom of card */
+.next-btn {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+}
+
+.progress { height:8px; background:#eef6fb; border-radius:999px; margin-top:12px; overflow:hidden; }
+.progress > i { display:block; height:100%; background:linear-gradient(90deg,#1b7ed6,#4fc3f7); width: calc(var(--progress, 0) * 1%); transition: width 360ms ease; }
+
+@media (min-width:720px) { .choices { grid-template-columns: repeat(2, minmax(300px, 1fr)); justify-items:center; } .choice { width:100%; } }
+@media (max-width:480px) { .container { padding:12px; } .btn { padding:8px 12px; } }
+
+/* ===== レベル選択の大きな正方形ボタン ===== */
+.level-grid {
+  display:flex;
+  gap:18px;
+  justify-content:center;
+  align-items:center;
+  margin-top:12px;
+}
+.level-btn {
+  display:inline-flex;
+  width:140px;
+  height:140px;
+  border-radius:18px;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(180deg,#2a9df4,#1b7ed6);
+  box-shadow:0 8px 20px rgba(27,126,214,0.18);
+  font-weight:700;
+  font-size:1.05rem;
+}
+.level-btn.secondary { background:#6cc1a3; box-shadow:0 8px 20px rgba(108,193,163,0.12); color:#fff; }
+
+@media (min-width:1000px) {
+  .level-btn { width:160px; height:160px; font-size:1.12rem; }
+}
+
+@media (max-width:420px) {
+  .level-btn { width:110px; height:110px; font-size:0.95rem; }
+}
+
+/* result page styles */
+.big-correct { font-size:2rem; font-weight:800; color:#134e6f; margin:8px 0; }
+.small-ticket { font-size:0.95rem; color:#2b7d55; margin-bottom:8px; }
+.review-list { margin-top:10px; }
+.review-item {
+  position: relative;
+  padding:10px 10px 10px 20px; /* space for the colored bar */
+  border-radius:8px;
+  margin-bottom:10px;
+  border:1px solid #e9eef3;
+  background:#fbfcff;
+  overflow: hidden;
+}
+
+/* Use pseudo-element for the colored indicator so it follows border-radius */
+.review-item.correct::before,
+.review-item.incorrect::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  border-radius: 8px 0 0 8px;
+}
+.review-item.correct::before { background: #2b7d55; }
+.review-item.incorrect::before { background: #d9534f; }
+.review-q { font-weight:700; margin-bottom:6px; }
+.review-choices { color:#444; }
+
+/* math-themed subtle tiled background for class1 pages */
+/* use body::before so pattern covers full viewport (CSS only loaded on class1 pages) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'><text x='18' y='40' font-family='sans-serif' font-size='56' fill='%2386bff0' opacity='0.28' transform='rotate(-12 18 40)'>+</text><text x='90' y='60' font-family='sans-serif' font-size='42' fill='%2386bff0' opacity='0.20' transform='rotate(6 90 60)'>-</text><text x='30' y='140' font-family='sans-serif' font-size='50' fill='%2386bff0' opacity='0.24' transform='rotate(22 30 140)'>×</text><text x='200' y='110' font-family='sans-serif' font-size='48' fill='%2386bff0' opacity='0.22' transform='rotate(-18 200 110)'>÷</text><text x='140' y='30' font-family='sans-serif' font-size='28' fill='%2386bff0' opacity='0.18' transform='rotate(8 140 30)'>=</text><text x='260' y='50' font-family='sans-serif' font-size='40' fill='%2386bff0' opacity='0.16' transform='rotate(28 260 50)'>+</text><text x='50' y='220' font-family='sans-serif' font-size='38' fill='%2386bff0' opacity='0.14' transform='rotate(-8 50 220)'>-</text><text x='180' y='200' font-family='sans-serif' font-size='46' fill='%2386bff0' opacity='0.20' transform='rotate(12 180 200)'>×</text><text x='280' y='170' font-family='sans-serif' font-size='36' fill='%2386bff0' opacity='0.14' transform='rotate(4 280 170)'>÷</text><text x='220' y='40' font-family='sans-serif' font-size='22' fill='%2386bff0' opacity='0.12' transform='rotate(-6 220 40)'>=</text></svg>");
+  background-repeat: repeat;
+  background-size: 320px 320px;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container > * { position: relative; z-index: 1; }
