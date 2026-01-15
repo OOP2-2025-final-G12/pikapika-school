@@ -4,161 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>授業２（文系） - レベル3</title>
-    <style> /*レベル３は長文があるので、CSSはこれで良し*/
-        body {
-            font-family: 'Hiragino Sans', 'Meiryo', 'Yu Gothic', sans-serif;
-            background: linear-gradient(to bottom, #f0f8ff, #fffaf0);
-            color: #333;
-            margin: 0;
-            padding: 20px 0;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* CSSだけで背景に動きをつける（龍モチーフ） */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-            /* 龍本体を大きくするためにスケールアップ＆位置調整 */
-            radial-gradient(ellipse 180% 120% at 10% 25%, rgba(40,40,80,0.38) 0%, transparent 30%),
-            radial-gradient(ellipse 160% 110% at 30% 38%, rgba(30,30,70,0.42) 0%, transparent 28%),
-            radial-gradient(ellipse 170% 115% at 55% 32%, rgba(25,25,65,0.45) 0%, transparent 25%),
-            radial-gradient(ellipse 150% 130% at 75% 42%, rgba(35,35,75,0.40) 0%, transparent 32%),
-            radial-gradient(ellipse 140% 100% at 88% 28%, rgba(45,45,85,0.35) 0%, transparent 30%),
-            
-            /* 頭部強調 */
-            radial-gradient(circle 90px at 12% 18%, rgba(15,15,50,0.55) 0%, transparent 50%),
-            
-            /* 尾強調 */
-            radial-gradient(ellipse 200% 140% at 92% 78%, rgba(30,30,70,0.38) 0%, transparent 35%),
-            
-            /* 墨のタッチ（濃さを少し上げて） */
-            linear-gradient(40deg, transparent 46%, rgba(20,20,60,0.18) 50%, transparent 54%),
-            linear-gradient(-50deg, transparent 46%, rgba(20,20,60,0.15) 50%, transparent 54%),
-            radial-gradient(circle at 45% 65%, rgba(25,25,65,0.22) 0%, transparent 40%);
-        
-        background-size: 120% 120%, 110% 110%, 130% 130%, 100% 100%, 140% 140%, 
-                        80% 80%, 150% 150%, 200% 200%, 180% 180%, 160% 160%;
-        background-position: center;
-        background-repeat: no-repeat;
-        opacity: 0.82;
-        pointer-events: none;
-        z-index: -2;
-    }
-
-    /* コンテナの背景を少し透明に（龍がより見える） */
-    .container {
-        max-width: 900px;
-        margin: 40px auto;
-        background: rgba(255, 255, 255, 0.78);
-        padding: 40px 50px;
-        border-radius: 24px;
-        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-        backdrop-filter: blur(8px);
-        position: relative;
-        z-index: 1;
-    }
-
-    /* 文字の視認性を保つための調整 */
-    h1, h2, label, button {
-        position: relative;
-        z-index: 2;
-        text-shadow: 0 1px 3px rgba(255,255,255,0.9);
-    }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            color: #e67e22;
-            font-size: 1.4rem;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            padding-left: 10px;
-            border-left: 6px solid #f39c12;
-            background: #fdf2e9;
-            padding: 10px 15px;
-            border-radius: 0 8px 8px 0;
-        }
-
-        label {
-            display: block;
-            font-size: 1.2rem;
-            margin: 12px 0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background 0.3s ease;
-            cursor: pointer;
-        }
-
-        label:hover {
-            background: #ebf3fd;
-        }
-
-        input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.3);
-            accent-color: #3498db;
-        }
-
-        button[type="submit"] {
-            display: block;
-            width: 300px;
-            margin: 50px auto;
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            background: linear-gradient(to right, #3498db, #2980b9);
-            border: none;
-            border-radius: 50px;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        button[type="submit"]:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.5);
-        }
-
-        .flash-messages {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .flash {
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-
-        .flash-success { background: #d4edda; color: #155724; }
-        .flash-error { background: #f8d7da; color: #721c24; }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-            color: #7f8c8d;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-
-        a:hover {
-            color: #3498db;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='class2_levelstyle.css') }}">
 </head>
 <body>
     <h1>レベル3 授業</h1>
@@ -201,17 +47,17 @@
         <!-- 問題2 -->
         <h2>3-2. 次の文を読んで質問に答えなさい</h2>
         <p><strong>【問題文】</strong><br>
-            古城さんのクラスでは、グループごとに学校行事として、職業体験に行きました。その後、発表する際の原稿を読んで、後の問いに答えなさい。<br>
-            私達のグループは、町川市立図書館に職業体験へ行きました。理由は、私たちのグループに、作家のお父さんを持つ木下そあ君がいて、作家さんの日常について詳しく聞いている内に、その本が皆のもとに届く間の仕事について興味を持ったからです。<br>
-            まず最初に、私たちの職業体験に付き添って頂いた、中間恵菜さんについて、少しご説明いたします。<br>
-            皆さんは、図書館の職員と聞くと、子供の頃から本を読んでいたり、文学作品に触れていたり、なんて考えるのではないでしょうか。しかし、中間さんは、「子供の頃は、専らゲーム一択。よくお母さんから叱られてました」と仰っていました。中間さんが本との出会いを果たしたのは、高校2年生の頃。当時、仲が良かった友達に、たくさんの本を勧めてもらったことがキッカケでした。その方は文学部で、選ぶ本もどれも簡単な上、面白いものが多く、どれもこれもスグにハマったそうです。私たちと同じ理系のクラスにいた中間さんは、普段から本を読むような事は滅多にありませんでしたが、その方が選んだ本にのめり込むうち、本に関わる仕事に就きたいと考えるようになったと昔を振り返ってらっしゃいました。<br>
-            私達は、中間さんの話を聞いて、本との出会いが人の人生を大きく変えたと言うことにとても驚き、昔の話をしている時の中間さんの嬉しそうな表情に、ドキッとしました。<br>
-            さて、本題の職業体験について話していきます。<br>
-            私たちは、最初に雑誌の入れ替え作業を行いました。町川市立図書館では、A、B、C、D、Eの5つの書架に雑誌を分けていきます。中間さんの説明では、アニメや漫画、戦隊物などの子供向け雑誌はA。車やミリタリーなどの趣味・娯楽系の雑誌はB、女性向けや週刊誌などはC、囲碁や野球などのスポーツ、文化的なものはD、その他はEに並べるそうです。中間さんは、説明しながらもテキパキと本を棚に収めていき、私たちは手際の良さに感動しました。<br>
-            ここで一つ、小噺なのですが、私（古城）や木下君がまじめに仕分けをしているなか、元澤さんが途中から、とある週刊誌を読み始めてしまいました。内容は、某政治家が幼女趣味を持っていたという暴露系で、元澤さんは「信じられない」というような事を言っていました。すると、井野くんが調子に乗って、「自分もロリコンだ」と冗談を言いました。元澤さんがスグに、「捕まえてやる」と返して、その場は笑いに包まれました。これは冗談を含んだ笑い話ですが、絶対に未成年への交渉など、してはいけません。<br>
-            本題に戻ります。笑いながら、中間さんが元澤さんに、「その雑誌は今まで読んだことがあるの？」とお聞きになられました。元澤さんが「無いです」と答えると、「なら、他の巻も読んでみて」と続けました。私（古城）が理由を尋ねると、「その本の性質を知るのも、図書館で働くためには必要。どんな本をお客さんにオススメするべきなのか、知っておかないと」と返され、納得しました。ただ、本を貸したり返したり、直したり棚に並べたりするだけでは、ダメなんです。館内の本を熟知し、いつどんな時にオススメの本を聞かれても答えられなくてはいけない。図書館の職員さんの凄さを改めて実感しました。<br>
-            そうして、本を読んでいると、中間さんが「もう終わりも近いから、システム触ってみる？」と、本の検索や貸し借りのシステムを体験させて下さいました。返すときに、おばあちゃんが「この本、面白かったよ」と言って下さったり、常連だというお兄さんが「木下さんはね－－－」と、木下君のお父さんについて熱く語っていかれたりと、印象に残る出来事がたくあんありましたが、皆、笑っていました。<br>
-            現代では、文字離れ、本離れが進んでいます。自習のために入った図書館の、ふと目を挙げた瞬間に視界に入る本。一度、目を通してみるのはどうですか？ 本は人を笑顔にし、幸せにする。中間さん、そして体験中の皆さんの笑顔から、私達が学んだ事です。<br>
+            　古城さんのクラスでは、グループごとに学校行事として、職業体験に行きました。その後、発表する際の原稿を読んで、後の問いに答えなさい。<br>
+            　私達のグループは、町川市立図書館に職業体験へ行きました。理由は、私たちのグループに、作家のお父さんを持つ木下そあ君がいて、作家さんの日常について詳しく聞いている内に、その本が皆のもとに届く間の仕事について興味を持ったからです。<br>
+            　まず最初に、私たちの職業体験に付き添って頂いた、中間恵菜さんについて、少しご説明いたします。<br>
+            　皆さんは、図書館の職員と聞くと、子供の頃から本を読んでいたり、文学作品に触れていたり、なんて考えるのではないでしょうか。しかし、中間さんは、「子供の頃は、専らゲーム一択。よくお母さんから叱られてました」と仰っていました。中間さんが本との出会いを果たしたのは、高校2年生の頃。当時、仲が良かった友達に、たくさんの本を勧めてもらったことがキッカケでした。その方は文学部で、選ぶ本もどれも簡単な上、面白いものが多く、どれもこれもスグにハマったそうです。私たちと同じ理系のクラスにいた中間さんは、普段から本を読むような事は滅多にありませんでしたが、その方が選んだ本にのめり込むうち、本に関わる仕事に就きたいと考えるようになったと昔を振り返ってらっしゃいました。<br>
+            　私達は、中間さんの話を聞いて、本との出会いが人の人生を大きく変えたと言うことにとても驚き、昔の話をしている時の中間さんの嬉しそうな表情に、ドキッとしました。<br>
+            　さて、本題の職業体験について話していきます。<br>
+            　私たちは、最初に雑誌の入れ替え作業を行いました。町川市立図書館では、A、B、C、D、Eの5つの書架に雑誌を分けていきます。中間さんの説明では、アニメや漫画、戦隊物などの子供向け雑誌はA。車やミリタリーなどの趣味・娯楽系の雑誌はB、女性向けや週刊誌などはC、囲碁や野球などのスポーツ、文化的なものはD、その他はEに並べるそうです。中間さんは、説明しながらもテキパキと本を棚に収めていき、私たちは手際の良さに感動しました。<br>
+            　ここで一つ、小噺なのですが、私（古城）や木下君がまじめに仕分けをしているなか、元澤さんが途中から、とある週刊誌を読み始めてしまいました。内容は、某政治家が幼女趣味を持っていたという暴露系で、元澤さんは「信じられない」というような事を言っていました。すると、井野くんが調子に乗って、「自分もロリコンだ」と冗談を言いました。元澤さんがスグに、「捕まえてやる」と返して、その場は笑いに包まれました。これは冗談を含んだ笑い話ですが、絶対に未成年への交渉など、してはいけません。<br>
+            　本題に戻ります。笑いながら、中間さんが元澤さんに、「その雑誌は今まで読んだことがあるの？」とお聞きになられました。元澤さんが「無いです」と答えると、「なら、他の巻も読んでみて」と続けました。私（古城）が理由を尋ねると、「その本の性質を知るのも、図書館で働くためには必要。どんな本をお客さんにオススメするべきなのか、知っておかないと」と返され、納得しました。ただ、本を貸したり返したり、直したり棚に並べたりするだけでは、ダメなんです。館内の本を熟知し、いつどんな時にオススメの本を聞かれても答えられなくてはいけない。図書館の職員さんの凄さを改めて実感しました。<br>
+            　そうして、本を読んでいると、中間さんが「もう終わりも近いから、システム触ってみる？」と、本の検索や貸し借りのシステムを体験させて下さいました。返すときに、おばあちゃんが「この本、面白かったよ」と言って下さったり、常連だというお兄さんが「木下さんはね－－－」と、木下君のお父さんについて熱く語っていかれたりと、印象に残る出来事がたくあんありましたが、皆、笑っていました。<br>
+            　現代では、文字離れ、本離れが進んでいます。自習のために入った図書館の、ふと目を挙げた瞬間に視界に入る本。一度、目を通してみるのはどうですか？ 本は人を笑顔にし、幸せにする。中間さん、そして体験中の皆さんの笑顔から、私達が学んだ事です。<br>
 
         <p><strong>【質問】</strong><br>
         何故、中間さんは図書館で働こうと思ったのか。</p>
@@ -345,6 +191,18 @@
             scoreDiv.innerHTML = `<h2>結果：${score} / ${total} 問正解</h2>`;
             document.querySelector('h1').insertAdjacentElement('afterend', scoreDiv);
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const blocks = document.querySelectorAll("p, .long-text, .question-content, .answer-content");
+    
+            blocks.forEach(block => {
+                const text = block.textContent.trim();
+                // 例: 120文字以上なら「長い」とみなす
+                if (text.length > 200) {
+                    block.classList.add("has-long-text");
+                }
+            });
+        });
     </script>
 
 </body>
