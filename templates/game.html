@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ルーレットゲーム | ピカピカスクール</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #FFA500;   /* 誤魔化すためのもの */
+        }
+
+        .roulette-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            width: auto;
+            text-align: center;
+        }
+
+        #roulette {
+            position: relative;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        
+        border-radius: 50%;
+        border: 8px solid #ffd700; /* 金色の縁取り */
+        width: 330px;
+        height: 330px;
+        box-sizing: border-box;
+    }
+
+        .arrow {
+            width: 30; height: 30;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid #e74c3c;
+            position: absolute;
+            top: 90px; left: 103%; transform: translateX(-50%);
+            rotate: 0deg;
+        }
+
+        .spin-btn {
+            margin-top: 20px;
+            padding: 8px 20px;
+            min-width: 300px;
+            height: 50px;
+            font-size: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+     .result {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            min-height: 40px;
+            font-size: 1.3em;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="roulette-container">
+        <h2>チケットを使ってルーレットを回そう！</h2>
+        <div id="roulette">
+            <div class="arrow"></div>
+            <canvas id="rouletteCanvas" width="320" height="320"></canvas>
+        </div>
+        <div class="result" id="result"></div>
+        <button class="spin-btn" onclick="spinRoulette()" id="spinBtn">ルーレットを回す（チケット1枚消費）</button>
+        <a href="{{ url_for('main.index') }}" class="spin-btn" style="margin-top:10px;">トップに戻る</a>
+    </section>
+    <script>
+        // ルーレットのマスとコイン数
+        const sectors = [
+            {label: "1コイン", value: 1, color: "#f8b400"},
+            {label: "2コイン", value: 2, color: "#6a89cc"},
+            {label: "3コイン", value: 3, color: "#38ada9"},
+            {label: "5コイン", value: 5, color: "#e17055"},
+            {label: "10コイン", value: 10, color: "#fdcb6e"},
+            {label: "ハズレ", value: 0, color: "#b2bec3"},
+        ];
+        const canvas = document.getElementById('rouletteCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = 160;
+        const sectorAngle = 2 * Math.PI / sectors.length;
+
+        function drawRoulette() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < sectors.length; i++) {
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, i * sectorAngle, (i + 1) * sectorAngle);
+                ctx.closePath();
+                ctx.fillStyle = sectors[i].color;
+                ctx.fill();
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(i * sectorAngle + sectorAngle / 2);
+                ctx.textAlign = "center";
+                ctx.fillStyle = "#222";
+                ctx.font = "20px sans-serif";
+                ctx.fillText(sectors[i].label, radius * 0.7, 0);
+                ctx.restore();
+            }
+        }
+        drawRoulette();
+
+        function spinRoulette() {
+            document.getElementById('spinBtn').disabled = true;
+            let spins = Math.floor(Math.random() * 25) + 10;
+            let currentAngle = 0;
+            let step = 0;
+            let interval = setInterval(() => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(currentAngle);
+                ctx.translate(-centerX, -centerY);
+                drawRoulette();
+                ctx.restore();
+                currentAngle += 0.3;
+                step++;
+                if (step > spins) {
+                    clearInterval(interval);
+                    let landed = Math.floor(((2 * Math.PI - (currentAngle % (2 * Math.PI))) / sectorAngle)) % sectors.length;
+                    let result = sectors[landed];
+                    document.getElementById('result').textContent = result.value > 0 ?
+                        `${result.label}獲得！` : "ハズレ…またチャレンジしてね！";
+                    document.getElementById('spinBtn').disabled = false;
+                }
+            }, 80);
+        }
+    </script>
+</body>
+</html>

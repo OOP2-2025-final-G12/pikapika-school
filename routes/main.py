@@ -48,6 +48,11 @@ def select():
     users = User.select().order_by(User.id.desc())
     return render_template("select.html", user=user, users=users)
 
+@main_bp.route("/game")
+def game():
+
+    users = User.select().order_by(User.coin.desc())
+    return render_template("game.html",users = users)
 
 @main_bp.route("/ranking")
 def ranking():
