@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from peewee import DoesNotExist
 from models import User
 
 main_bp = Blueprint("main", __name__)
@@ -23,7 +24,7 @@ def index():
     if user_id:
         try:
             user = User.get_by_id(user_id)
-        except User.DoesNotExist:
+        except DoesNotExist:
             session.clear()
 
     return render_template("index.html", user=user)
@@ -40,7 +41,7 @@ def select():
     # 現在のユーザーを取得
     try:
         user = User.get_by_id(user_id)
-    except User.DoesNotExist:
+    except DoesNotExist:
         session.clear()
         return redirect(url_for("main.index"))
 

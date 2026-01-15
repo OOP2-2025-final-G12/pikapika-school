@@ -1,6 +1,6 @@
 from flask import Flask
 from models import db, User
-from routes import main_bp, class1_bp
+from routes import main_bp, class1_bp, game_bp
 from routes.class2 import class2_bp
 
 def create_app():
@@ -15,6 +15,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(class1_bp)
     app.register_blueprint(class2_bp)
+    app.register_blueprint(game_bp)
 
     return app
 
