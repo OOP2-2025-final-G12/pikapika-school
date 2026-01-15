@@ -18,6 +18,7 @@
             align-items: center;
             justify-content: center;
             min-height: 80vh;
+            width: auto;
             text-align: center;
         }
 
@@ -47,8 +48,14 @@
 
         .spin-btn {
             margin-top: 20px;
-            padding: 6px 30px;
+            padding: 8px 20px;
+            min-width: 300px;
+            height: 50px;
             font-size: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
             background: #4caf50;
             color: #fff;
             border: none;
@@ -58,23 +65,27 @@
 
      .result {
             margin-top: 15px;
+            margin-bottom: 10px;
+            min-height: 40px;
             font-size: 1.3em;
-            color: #e67e22;
+            color: #fff;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
     </style>
 </head>
 <body>
     <section class="roulette-container">
-        <h2>コインをゲットしよう！</h2>
+        <h2>チケットを使ってルーレットを回そう！</h2>
         <div id="roulette">
             <div class="arrow"></div>
             <canvas id="rouletteCanvas" width="320" height="320"></canvas>
         </div>
-        <button class="spin-btn" onclick="spinRoulette()" id="spinBtn">ルーレットを回す（チケット1枚消費）</button>
         <div class="result" id="result"></div>
-        <button class="spin-btn" onclick="resetRoulette()" id="resetBtn" style="display:none;">もう一度遊ぶ</button>
+        <button class="spin-btn" onclick="spinRoulette()" id="spinBtn">ルーレットを回す（チケット1枚消費）</button>
         <a href="{{ url_for('main.index') }}" class="spin-btn" style="margin-top:10px;">トップに戻る</a>
     </section>
     <script>
@@ -117,8 +128,7 @@
 
         function spinRoulette() {
             document.getElementById('spinBtn').disabled = true;
-            document.getElementById('resetBtn').style.display = "none";
-            let spins = Math.floor(Math.random() * 10) + 10;
+            let spins = Math.floor(Math.random() * 25) + 10;
             let currentAngle = 0;
             let step = 0;
             let interval = setInterval(() => {
@@ -138,17 +148,8 @@
                     document.getElementById('result').textContent = result.value > 0 ?
                         `${result.label}獲得！` : "ハズレ…またチャレンジしてね！";
                     document.getElementById('spinBtn').disabled = false;
-                    document.getElementById('resetBtn').style.display = "inline-block";
                 }
             }, 80);
-        }
-
-        function resetRoulette() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawRoulette();
-            document.getElementById('result').textContent = "";
-            document.getElementById('spinBtn').disabled = false;
-            document.getElementById('resetBtn').style.display = "none";
         }
     </script>
 </body>
