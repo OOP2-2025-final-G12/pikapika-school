@@ -1,7 +1,7 @@
 from flask import Flask
 from models import db, User
 from routes import main_bp, class1_bp, game_bp
-
+from routes.class2 import class2_bp
 
 def create_app():
     """Flaskアプリケーション作成"""
@@ -14,6 +14,7 @@ def create_app():
     # Blueprint登録
     app.register_blueprint(main_bp)
     app.register_blueprint(class1_bp)
+    app.register_blueprint(class2_bp)
     app.register_blueprint(game_bp)
 
     return app
