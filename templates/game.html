@@ -80,13 +80,16 @@
 <body>
     <section class="roulette-container">
         <h2>チケットを使ってルーレットを回そう！</h2>
+        <div style="margin-bottom: 20px; font-size: 1.2em; color: #fff;">
+            <p>ユーザー: <strong>{{ user.name }}</strong> | コイン: <strong id="coinCount">{{ user.coin }}</strong> | チケット: <strong id="ticketCount">{{ user.ticket }}</strong></p>
+        </div>
         <div id="roulette">
             <div class="arrow"></div>
             <canvas id="rouletteCanvas" width="320" height="320"></canvas>
         </div>
         <div class="result" id="result"></div>
         <button class="spin-btn" onclick="spinRoulette()" id="spinBtn">ルーレットを回す（チケット1枚消費）</button>
-        <a href="{{ url_for('main.index') }}" class="spin-btn" style="margin-top:10px;">トップに戻る</a>
+        <a href="{{ url_for('main.select') }}" class="spin-btn" style="margin-top:10px;">選択画面に戻る</a>
     </section>
     <script>
         // ルーレットのマスとコイン数
@@ -127,7 +130,15 @@
         drawRoulette();
 
         function spinRoulette() {
+            const ticketCount = parseInt(document.getElementById('ticketCount').textContent);
+            if (ticketCount < 1) {
+                document.getElementById('result').textContent = "チケットが足りません！";
+                return;
+            }
+            
             document.getElementById('spinBtn').disabled = true;
+            document.getElementById('result').textContent = "ルーレット回転中...";
+            
             let spins = Math.floor(Math.random() * 25) + 10;
             let currentAngle = 0;
             let step = 0;
@@ -145,9 +156,32 @@
                     clearInterval(interval);
                     let landed = Math.floor(((2 * Math.PI - (currentAngle % (2 * Math.PI))) / sectorAngle)) % sectors.length;
                     let result = sectors[landed];
-                    document.getElementById('result').textContent = result.value > 0 ?
-                        `${result.label}獲得！` : "ハズレ…またチャレンジしてね！";
-                    document.getElementById('spinBtn').disabled = false;
+                    
+                    // サーバーに結果を送信
+                    fetch('/game/spin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ coins: result.value })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('ticketCount').textContent = data.newTicketCount;
+                            document.getElementById('coinCount').textContent = data.newCoinCount;
+                            document.getElementById('result').textContent = result.value > 0 ?
+                                `${result.label}獲得！` : "ハズレ…またチャレンジしてね！";
+                        } else {
+                            document.getElementById('result').textContent = data.message || "エラーが発生しました";
+                        }
+                        document.getElementById('spinBtn').disabled = false;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('result').textContent = "エラーが発生しました";
+                        document.getElementById('spinBtn').disabled = false;
+                    });
                 }
             }, 80);
         }
